@@ -173,10 +173,14 @@ CA_STEP6_derive_keys(EAC_CTX *ctx, const BUF_MEM *nonce, const BUF_MEM *token);
         if (!CA_STEP5_derive_keys(ctx, pubkey_buf, &nonce, &token))
             goto err;
 
-        /* In python3 the following functions must be replace with their
-           PyBytes counterparts. */
+        #if PY_MAJOR_VERSION < 3
         nonce_str = PyString_FromStringAndSize(nonce->data, nonce->length);
         token_str = PyString_FromStringAndSize(token->data, token->length);
+        #else
+        nonce_str = PyBytes_FromStringAndSize(nonce->data, nonce->length);
+        token_str = PyBytes_FromStringAndSize(token->data, token->length);
+        #endif
+
         if (!nonce_str || !token_str)
             goto err;
 
