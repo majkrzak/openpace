@@ -27,9 +27,7 @@
 %module eac
 
 %begin %{
-#if PY_MAJOR_VERSION == 3
 #define SWIG_PYTHON_STRICT_BYTE_CHAR
-#endif
 %}
 
 %include "cstring.i"
